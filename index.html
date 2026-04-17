@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Amore Mio ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* 🔐 LOCK SCREEN */
+#lockScreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input {
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+/* MAIN CONTENT */
+#mainContent {
+    display: none;
+}
+
+/* background gif */
+#bgGif {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.12;
+    z-index: -1;
+    display: none;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+}
+
+#typing {
+    font-size: 22px;
+    white-space: pre-line;
+    animation: fadeIn 2s forwards;
+}
+
+@keyframes fadeIn {
+    from {opacity:0}
+    to {opacity:1}
+}
+
+.special {
+    font-size: 80px;
+    margin-top: 20px;
+}
+
+/* FINAL ELEMENTS */
+#heart, #startBtn, #finalMsg, #candle, #blowBtn, #finalGlow {
+    display: none;
+}
+
+#heart {
+    font-size: 90px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    50% { transform: scale(1.2); text-shadow: 0 0 30px red; }
+}
+
+#finalGlow {
+    color: #ff4d6d;
+    text-shadow: 0 0 20px #ff4d6d;
+    font-size: 24px;
+}
+
+/* floating hearts */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    color: rgba(255,0,0,0.6);
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-110vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔐 LOCK -->
+<div id="lockScreen">
+    <h2>Something is waiting for you… 💌</h2>
+    <p>Enter the secret word 😌</p>
+
+    <input id="password" placeholder="Type here...">
+    <br>
+    <button onclick="unlock()">Unlock ❤️</button>
+
+    <p id="error" style="color:red;"></p>
+</div>
+
+<!-- 💖 MAIN -->
+<div id="mainContent">
+
+<img id="bgGif" src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif">
+
+<div class="container">
+
+<div id="typing"></div>
+<div id="specialContainer"></div>
+
+<div id="heart">❤️</div>
+<button id="startBtn">Tap Here 💕</button>
+
+<div id="finalMsg"></div>
+
+<div id="candle">🕯️</div>
+<button id="blowBtn">Blow Candle 💨</button>
+
+<div id="finalGlow">✨ Cake Cut… Happy Birthday Amore Mio ❤️ ✨</div>
+
+</div>
+</div>
+
+<script>
+
+// 🔐 PASSWORD (FIXED)
+const correctPassword = "amore";
+
+function unlock(){
+    const val = document.getElementById("password").value.toLowerCase();
+
+    if(val === correctPassword){
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        startExperience();
+    } else {
+        document.getElementById("error").innerText = "Hmm… try again 😏";
+    }
+}
+
+// 🎯 EXPERIENCE
+function startExperience(){
+
+const birthday = new Date("April 27, 2026").getTime();
+const today = new Date().getTime();
+const days = Math.ceil((birthday - today)/(1000*60*60*24));
+
+const typing = document.getElementById("typing");
+const specialContainer = document.getElementById("specialContainer");
+
+// DAILY CONTENT
+const dailyContent = {
+10:"💖 Hearts are floating just for you…",
+9:"🐧 A cute penguin is walking towards you…",
+8:"🌹 A rose just bloomed for you…",
+7:"🐼 A panda is waiting to hug you…",
+6:"🌸 Flowers are dancing for you…",
+5:"✨ Something magical is getting closer…",
+4:"💫 Can you feel it coming…?",
+3:"💓 My heart is racing now…",
+2:"🥺 Almost time…",
+1:"🎁 Tomorrow… everything changes…"
+};
+
+// suspense
+function getLine(day){
+if(day==3) return "I need to tell you something… 💭";
+if(day==2) return "Almost time… 💓";
+if(day==1) return "Tomorrow… everything changes ❤️";
+return "I was thinking about you… 😌";
+}
+
+// DAILY
+if(days > 0){
+
+typing.innerHTML = `${getLine(days)}
+
+Hey Amore Mio… ❤️
+
+Aaj kay ahe, mahit ahe ka?
+
+${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long'})}
+
+Which means…
+
+${days} days to go… ⏳
+
+${dailyContent[days] || ""}
+
+And trust me…
+This is not just a countdown.
+
+It’s something I’ve been building…
+just for you 💖`;
+
+let el = document.createElement("div");
+el.className="special";
+el.innerHTML=["❤️","🐧","🌹","🐼","🌸","✨","💫","💓","🥺","🎁"][10-days];
+specialContainer.appendChild(el);
+
+}
+
+// FINAL DAY
+else{
+
+document.getElementById("bgGif").style.display="block";
+
+typing.innerHTML=`Hey Amore Mio… ❤️
+
+Today is not a countdown anymore…`;
+
+document.getElementById("heart").style.display="block";
+document.getElementById("startBtn").style.display="inline-block";
+
+}
+
+}
+
+// 💖 FINAL MESSAGE
+const text = `So… this was always meant for you.
+
+Every countdown, every small thing I sent… it was all leading to this moment.
+
+I don’t know when you became so important to me… but somewhere between the little conversations and silent thoughts, you became a part of my heart.
+
+There’s a strange kind of peace I feel when I think of you…
+
+And what I feel for you… it’s real.
+
+You mean more to me than I can put into words.
+
+Happy Birthday My Future Husband ❤️`;
+
+document.getElementById("startBtn").onclick = ()=>{
+
+let i=0;
+let el=document.getElementById("finalMsg");
+el.style.display="block";
+
+function type(){
+if(i<text.length){
+el.innerHTML+=text.charAt(i);
+i++;
+setTimeout(type,25);
+}else{
+document.getElementById("candle").style.display="block";
+document.getElementById("blowBtn").style.display="inline-block";
+}
+}
+type();
+};
+
+// 🔥 BLOW
+document.getElementById("blowBtn").onclick = ()=>{
+document.getElementById("candle").innerHTML="💨";
+document.getElementById("blowBtn").style.display="none";
+
+setTimeout(()=>{
+document.getElementById("finalGlow").style.display="block";
+},800);
+};
+
+// ❤️ HEARTS
+function createHeart(){
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(Math.random()*20+10)+"px";
+h.style.animationDuration=(Math.random()*3+4)+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),7000);
+}
+setInterval(createHeart,400);
+
+</script>
+
+</body>
+</html>
