@@ -151,19 +151,44 @@ button {
 </div>
 
 <script>
+document.getElementById("password").addEventListener("keypress", function(e){
+    if(e.key === "Enter"){
+        unlock();
+    }
+});
 
 // 🔐 PASSWORD (FIXED)
 const correctPassword = "amore";
 
+let attempts = 0;
+
 function unlock(){
     const val = document.getElementById("password").value.toLowerCase();
+    const error = document.getElementById("error");
 
     if(val === correctPassword){
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("mainContent").style.display = "block";
         startExperience();
     } else {
-        document.getElementById("error").innerText = "Hmm… try again 😏";
+
+        attempts++;
+
+        if(attempts === 1){
+            error.innerText = "Hmm… not that simple 😌";
+        }
+        else if(attempts === 2){
+            error.innerText = "You already know this word… 💭";
+        }
+        else if(attempts === 3){
+            error.innerText = "Think… what I call you? ❤️";
+        }
+        else if(attempts === 4){
+            error.innerText = "It starts with ‘A’… 😏";
+        }
+        else{
+            error.innerText = "amore 💖 (I had to help you 😌)";
+        }
     }
 }
 
